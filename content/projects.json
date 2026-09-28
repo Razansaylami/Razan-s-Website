@@ -594,7 +594,7 @@
       "cover": "images/together-hero.jpg",
       "focus": "right",
       "description": "",
-      "video": "",
+      "video": "https://www.youtube.com/watch?v=7iy8iB8tu5c&list=RD7iy8iB8tu5c&start_radio=1",
       "gallery": [
         "images/together-a.jpg",
         "images/together-b.jpg",
@@ -641,7 +641,7 @@
       "cover": "images/dealer-hero.jpg",
       "focus": "center",
       "description": "",
-      "video": "",
+      "video": "https://www.youtube.com/watch?v=YwtvQ23_-34&list=RDYwtvQ23_-34&start_radio=1",
       "gallery": [
         "images/dealer-a.jpg",
         "images/dealer-b.jpg",
@@ -681,7 +681,7 @@
       "cover": "images/morni-hero.jpg",
       "focus": "center",
       "description": "",
-      "video": "",
+      "video": "https://www.youtube.com/watch?v=5meceygQZ-s&list=RD5meceygQZ-s&start_radio=1",
       "gallery": [
         "images/morni-a.jpg",
         "images/morni-b.jpg",
