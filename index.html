@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Razan Saylami</title>
+<meta name="description" content="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: "Monigue";
+  src: url("fonts/monigue.woff") format("woff"), url("fonts/monigue.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+:root {
+  --bg: #5B6A46;
+  --fg: #FCF9F4;
+  --muted: #B2B6A4;
+  --arabic: #B2B6A4;
+  --pad: clamp(16px, 2.4vw, 36px);
+  --gutter: clamp(32px, 5vw, 96px);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --font: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  /* Monigue covers letters only, so digits and symbols fall back to the body font */
+  --display: "Monigue", "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --title: clamp(3.1rem, min(11vw, 12vh), 13rem);
+  --hero: clamp(3.4rem, min(13.5vw, 19vh), 15rem);
+  --shade: linear-gradient(180deg, rgba(26,28,18,.42) 0%, rgba(26,28,18,.1) 40%, rgba(26,28,18,.1) 60%, rgba(26,28,18,.42) 100%);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--fg); }
+body {
+  font-family: var(--font);
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.4;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ul { list-style: none; }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
+
+/* Shared type */
+.t-display {
+  font-family: var(--display);
+  /* Monigue has no digits or punctuation beyond a few marks, so anything it lacks (numbers in a
+     title, an ampersand) falls back to Bricolage Grotesque. Weighting that fallback heavy and
+     condensed — the same treatment used for the nav labels — keeps it close to Monigue's own
+     weight instead of rendering thin and mismatched. Monigue itself ignores font-weight (it's a
+     single static cut), so this only affects the fallback characters. */
+  font-weight: 800; font-variation-settings: "wdth" 75, "opsz" 96; font-synthesis: none;
+  line-height: .9;
+  letter-spacing: 0;
+}
+.label {
+  font-size: clamp(12px, .9vw, 15px); font-weight: 500; line-height: 1;
+  white-space: nowrap;
+  color: var(--muted);
+}
+.dim { color: var(--muted); }
+
+/* The site hinges on the centre line: things to its left align right, things to its right align left. */
+.hinge { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter); align-items: start; }
+.hinge > :first-child { justify-self: end; text-align: right; }
+
+/* ---------- Full-screen image reveal (home) ---------- */
+.reveal { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.reveal__img {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transform: scale(1.05);
+  transition: opacity .5s ease, transform 1.6s var(--ease);
+}
+.reveal__img.is-on { opacity: 1; transform: scale(1); }
+.reveal__shade { position: absolute; inset: 0; background: var(--shade); opacity: 0; transition: opacity .5s ease; }
+body.is-revealing .reveal__shade { opacity: 1; }
+
+
+/* Top-bar lettering: the English word over the Arabic, exactly as drawn in the artwork.
+   Two masks in one frame, filled with the text colour, so they dim and recolour like text.
+   All four pieces share one scale (--g), keeping the proportions they were drawn at. */
+:root { --g: clamp(0.028px, min(0.0027vw, 0.0043vh), 0.042px); }
+.glyph {
+  position: relative; display: block;
+  width: calc(var(--w) * var(--g) * var(--gs, 1));
+  aspect-ratio: var(--w) / var(--h);
+}
+.glyph::before, .glyph::after {
+  content: ""; position: absolute; inset: 0;
+  filter: drop-shadow(0 0 .35em rgba(20,22,10,.35));
+  transform: translateZ(0);   /* render the mask at device resolution, not the layer's */
+  background: currentColor;
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
+.glyph::before { background: var(--arabic); -webkit-mask-image: var(--ar); mask-image: var(--ar); }  /* Arabic, behind */
+.glyph::after { -webkit-mask-image: var(--en); mask-image: var(--en); }                              /* English, in front */
+.g-name { --w: 5473; --h: 2147; --ar: url("images/nav/name-ar.png"); --en: url("images/nav/name-en.png"); }
+.g-direction { --w: 3220; --h: 1514; --ar: url("images/nav/direction-ar.png"); --en: url("images/nav/direction-en.png"); }
+.g-production { --w: 7166; --h: 2581; --ar: url("images/nav/production-ar.png"); --en: url("images/nav/production-en.png"); }
+.g-about { --w: 2085; --h: 1950; --ar: url("images/nav/about-ar.png"); --en: url("images/nav/about-en.png"); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Opening screen ----------
+   The home page starts on the name alone, centred. Scrolling one screen carries it into its slot in
+   the header while the rest of the page fades up. It's one continuous move tied to the scroll position,
+   not a timed animation, so it tracks the wheel or the finger exactly. */
+:root { --topH: 0px; --footH: 0px; --p: 1; }
+html.intro { scroll-behavior: auto; }
+html.intro .top:not(.panel__bar) { position: fixed; top: 0; left: 0; right: 0; z-index: 4; }
+html.intro main {
+  margin-top: calc(100svh + var(--topH));
+  min-height: calc(100svh - var(--topH) - var(--footH));
+}
+/* while the name is large the glow reads as blur, so it fades in only as the name reaches the header */
+html.intro .top:not(.panel__bar) .top__name .glyph::before,
+html.intro .top:not(.panel__bar) .top__name .glyph::after { filter: none; }
+html.intro[data-intro="off"] .top__name .glyph::before,
+html.intro[data-intro="off"] .top__name .glyph::after { filter: drop-shadow(0 0 .35em rgba(20,22,10,.35)); }
+/* The name is rasterised once at its largest on-screen size (the big opening state) and only ever
+   scaled DOWN from there — including to reach its small header size. Scaling a mask down stays sharp;
+   scaling it up (the old approach) resampled an already-small raster and read as blurry. The glyph is
+   taken out of flow so its large native box never affects the header's own layout. */
+html.intro .top:not(.panel__bar) .top__name { position: relative; }
+html.intro .top:not(.panel__bar) .top__name .glyph {
+  position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%) translate(var(--nx, 0px), var(--ny, 0px)) scale(var(--ns, 1));
+  transform-origin: left center;
+  will-change: transform;
+}
+/* everything except the name waits until the name is nearly home */
+html.intro .tabs,
+html.intro .top__about,
+html.intro main,
+html.intro .foot { opacity: clamp(0, calc((var(--p) - .5) / .5), 1); }
+html.intro[data-intro="on"] main,
+html.intro[data-intro="on"] .foot,
+html.intro[data-intro="on"] .tabs,
+html.intro[data-intro="on"] .top__about { pointer-events: none; }
+
+/* a quiet cue that the page continues, gone as soon as it starts moving.
+   It only exists while the opening screen does, so reduced motion never sees it. */
+.cue {
+  position: fixed; left: 50%; bottom: calc(var(--pad) * 1.4); z-index: 4;
+  transform: translateX(-50%);
+  display: none; color: var(--muted); pointer-events: none;
+  font-size: clamp(10px, .75vw, 12px); font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+}
+html.intro .cue { display: block; opacity: clamp(0, calc(1 - var(--p) * 4), 1); }
+
+/* ---------- Top bar ---------- */
+.top {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: 1rem 1.5rem;
+  padding: calc(var(--pad) * .7) var(--pad);
+  font-weight: 500;
+}
+.top__name { justify-self: start; }
+.top__about { justify-self: end; }
+.top__about:hover, .foot a:hover, .panel__bar a:hover { opacity: .65; }
+.tabs { display: flex; align-items: center; gap: calc(700 * var(--g)); justify-self: center; }
+.tab { color: var(--muted); transition: color .2s; }
+.tab:hover { color: color-mix(in srgb, var(--fg) 60%, var(--muted)); }
+.tab[aria-selected="true"] { color: var(--fg); }
+.tabs__sep { color: var(--muted); font-size: calc(1500 * var(--g)); font-weight: 300; line-height: 1; }
+
+/* ---------- Home lists ---------- */
+main {
+  position: relative; z-index: 1;
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+  padding: 0 var(--pad);
+}
+.list { padding: clamp(8px, 1.5vh, 28px) 0 clamp(20px, 3.5vh, 56px); transition: opacity .2s ease; }
+.list.is-leaving { opacity: 0; }
+.row { animation: rise .9s var(--ease) both; animation-delay: calc(var(--k) * 55ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(.4em); } to { opacity: 1; transform: none; } }
+.row__link, .ph__head {
+  display: grid; grid-template-columns: 1fr auto 1fr; grid-template-areas: "format title year";
+  align-items: center;
+  column-gap: clamp(14px, 1.5vw, 26px);
+}
+.row__link { padding: .02em 0; pointer-events: none; /* only the title is the hover and click target */ }
+.row__title {
+  grid-area: title; text-align: center;
+  font-size: var(--title);
+  pointer-events: auto; cursor: pointer;
+  transition: opacity .35s ease;
+}
+.row__format, .ph__format { grid-area: format; justify-self: end; text-align: right; }
+.row__year, .ph__year { grid-area: year; justify-self: start; }
+.row__format, .row__year { opacity: 0; transition: opacity .3s ease, transform .5s var(--ease); }
+.row__format { transform: translateX(-.6em); }
+.row__year { transform: translateX(.6em); }
+.row.is-active .row__format, .row.is-active .row__year { opacity: 1; transform: none; }
+.list.is-hovering .row:not(.is-active) .row__title { opacity: .14; }
+.list.is-hovering .row.is-active .row__title { text-shadow: 0 0 .5em rgba(20,22,10,.3); }
+
+/* ---------- Footer ---------- */
+.foot {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
+  gap: .5rem 1.5rem; padding: calc(var(--pad) * .8) var(--pad); font-weight: 500;
+}
+
+/* ---------- Page layer (project + About) ---------- */
+.panel {
+  --bar: calc(var(--pad) * 2 + 1.4em);
+  position: fixed; inset: 0; z-index: 20;
+  background: var(--bg); color: var(--fg);
+  overflow-y: auto; overscroll-behavior: contain;
+  opacity: 0; visibility: hidden;
+  transition: opacity .35s ease, visibility 0s linear .35s;
+}
+.panel:focus { outline: none; }
+.panel.is-open { opacity: 1; visibility: visible; transition: opacity .35s ease, visibility 0s; }
+.panel__bar { position: sticky; top: 0; z-index: 3; background: var(--bg); }
+.panel__bar .tab[aria-current="page"] { color: var(--fg); }
+/* on inner pages, whichever section you're in is full strength and the rest dim */
+.panel__bar .top__about { color: var(--muted); transition: color .2s; }
+.panel__bar .top__about:hover { color: color-mix(in srgb, var(--fg) 60%, var(--muted)); }
+.panel__bar .top__about[aria-current="page"] { color: var(--fg); }
+.panel__body { transition: opacity .22s ease; }
+.panel__body.is-swapping { opacity: 0; }
+
+/* Project page */
+.ph { padding: clamp(48px, 11vh, 150px) var(--pad) 0; }
+.ph__title { grid-area: title; text-align: center; font-size: var(--hero); }
+.pn__img { position: absolute; inset: 0; background-size: cover; background-position: center; }
+
+.pb { padding: clamp(56px, 10vh, 140px) var(--pad) 0; }
+.pb__credits { display: grid; gap: 1.1rem; }
+.pb__credits dt { color: var(--muted); font-size: .85em; }
+.pb__credits dd { font-weight: 600; }
+.pb__text { max-width: 32em; font-size: clamp(17px, 1.4vw, 21px); line-height: 1.5; }
+.pb__text p + p, .ab__text p + p { margin-top: 1em; }
+/* Festival laurels — each PNG is already white, so they're shown at a shared height rather than
+   cropped or stretched to match; a project with several just wraps to a second row. */
+.pb__laurels {
+  display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center;
+  gap: clamp(20px, 3vw, 40px);
+  margin-top: clamp(40px, 7vh, 84px);
+}
+.pb__laurels img { display: block; height: clamp(72px, 10vh, 124px); width: auto; }
+.pb__media { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s2, var(--pad)); margin-top: clamp(72px, 13vh, 170px); }
+.pb__video { grid-column: 1 / -1; aspect-ratio: 16 / 9; background: rgba(0,0,0,.25); }
+.pb__video iframe { width: 100%; height: 100%; border: 0; display: block; }
+/* every still is the same shape, so the gallery reads as one tiled grid rather than a laid-out sequence */
+.fig {
+  position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+  background-size: cover; background-position: center;
+  cursor: pointer; display: block; width: 100%; padding: 0; border: 0; text-align: left;
+}
+.fig img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.fig:hover img, .fig:focus-visible img { transform: scale(1.045); }
+.fig.is-missing { aspect-ratio: 4 / 3; }
+
+.pn {
+  position: relative; display: grid; place-items: center; align-content: center;
+  height: 78vh; min-height: 420px; margin-top: clamp(72px, 13vh, 170px);
+  overflow: hidden; text-align: center; padding: 0 var(--pad);
+}
+.pn__img { opacity: 0; transform: scale(1.05); transition: opacity .5s ease, transform 1.6s var(--ease); }
+.pn__img::after { content: ""; position: absolute; inset: 0; background: var(--shade); }
+.pn:hover .pn__img, .pn:focus-visible .pn__img { opacity: 1; transform: none; }
+.pn__label, .pn__title { position: relative; }
+.pn__label { display: block; margin-bottom: 1rem; font-weight: 500; color: var(--muted); }
+.pn__title { display: block; font-size: var(--title); }
+
+/* About page — one screen, no scrolling. The portrait runs tall on the left; the bio sits in the
+   upper part of a narrower column beside it, with Let's Connect held to the lower part of that same
+   column, so the two share a clear gap instead of running together. A flower column fills the screen
+   on the far left, fixed in place. */
+.ab {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: calc(100vh - var(--barH, 0px));
+  min-height: calc(100svh - var(--barH, 0px));
+  padding: clamp(10px, 2vh, 28px) var(--pad);
+}
+.ab__flower {
+  position: fixed; z-index: 1; inset: 0 auto 0 calc(var(--pad) + 64px);
+  width: clamp(48px, 5.6vw, 88px);
+  background: url("images/flowers.png") repeat-y center top;
+  background-size: 100% auto;
+  pointer-events: none;
+}
+.ab__layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 23vw) minmax(0, 1fr);
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: stretch;
+  height: min(78.5vh, 690px);
+  margin-left: clamp(180px, 19vw, 260px);
+  margin-right: clamp(48px, 7vw, 110px);
+}
+.ab__portrait { height: 100%; margin: 0; }
+.ab__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+/* sized to its own content and centred within the photo's height, rather than stretched to
+   fill it — that's what was pinning the bio to the top and Let's Connect to the bottom */
+.ab__right { display: flex; flex-direction: column; gap: clamp(56px, 8vh, 120px); align-self: center; }
+/* the bio now fills the width of its column rather than sitting in a narrow, centred block */
+.ab__text {
+  overflow: auto; text-align: left;
+  font-size: clamp(16px, min(1.55vw, 2.4vh), 23px); line-height: 1.48; font-weight: 700;
+}
+.ab__lead { font-size: clamp(26px, 2.6vw, 36px); line-height: 1.25; font-weight: 700; margin-bottom: 1.2em; text-align: left; }
+.ab__contact { text-align: center; }
+.connect {
+  position: relative; display: block; width: max-content; margin: 0 auto clamp(16px, 2.8vh, 30px);
+  font-size: clamp(1.2rem, 1.9vw, 1.7rem); line-height: 1;
+}
+.connect__ar {
+  position: absolute; left: 50%; top: 42%;
+  transform: translate(-50%, -50%) rotate(-4deg);
+  font-size: 1.9em; color: var(--arabic); opacity: .85;
+  white-space: nowrap; pointer-events: none; z-index: 0;
+}
+.connect__en {
+  position: relative; z-index: 1; display: block;
+  font-family: var(--display); font-weight: 400; font-synthesis: none;
+  color: var(--fg); white-space: nowrap; margin: 0;
+}
+.ab__mail {
+  display: inline-block; overflow-wrap: anywhere;
+  /* Monigue has no @ or full stop, so the address is set in the body face, condensed and heavy */
+  font-weight: 800; font-variation-settings: "wdth" 75, "opsz" 96;
+  font-size: clamp(1.8rem, 3.2vw, 4.6rem); line-height: 1; letter-spacing: -.02em;
+  transition: opacity .2s;
+}
+.ab__mail:hover { opacity: .65; }
+.ab__links { display: flex; justify-content: center; flex-wrap: wrap; gap: .4rem 1.6rem; margin-top: 1rem; font-weight: 500; font-size: clamp(12px, 1vw, 15px); }
+.ab__links a, .ab__links span { color: var(--muted); transition: color .2s; }
+.ab__links a:hover { color: var(--fg); }
+
+body.is-locked { overflow: hidden; }
+
+/* ---------- Lightbox: click a still to see it full-screen with prev/next ---------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(15, 16, 9, .96);
+  opacity: 0; visibility: hidden;
+  transition: opacity .25s ease, visibility 0s linear .25s;
+}
+.lightbox.is-open { opacity: 1; visibility: visible; transition: opacity .25s ease, visibility 0s; }
+.lightbox__img {
+  max-width: min(92vw, 1400px); max-height: 86vh;
+  width: auto; height: auto; object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+.lightbox__close, .lightbox__prev, .lightbox__next {
+  position: fixed; color: var(--fg); font-weight: 500; transition: opacity .2s;
+}
+.lightbox__close:hover, .lightbox__prev:hover, .lightbox__next:hover { opacity: .65; }
+.lightbox__close { top: var(--pad); right: var(--pad); font-size: clamp(13px, 1.1vw, 16px); }
+.lightbox__prev, .lightbox__next {
+  top: 50%; transform: translateY(-50%);
+  font-size: clamp(28px, 4vw, 44px); line-height: 1; padding: .3em .4em;
+}
+.lightbox__prev { left: clamp(6px, 2vw, 28px); }
+.lightbox__next { right: clamp(6px, 2vw, 28px); }
+.lightbox__count {
+  position: fixed; left: 50%; bottom: var(--pad); transform: translateX(-50%);
+  color: var(--muted); font-size: clamp(12px, 1vw, 14px); font-weight: 500; letter-spacing: .04em;
+}
+@media (max-width: 700px) {
+  .lightbox__prev, .lightbox__next { font-size: 30px; padding: .5em .35em; }
+  .lightbox__img { max-width: 94vw; max-height: 78vh; }
+}
+
+@media (hover: none) {
+  .list { padding: 32vh 0 40vh; } /* room for every title to reach mid-screen */
+  .pn__img { opacity: 1; transform: none; }
+}
+@media (max-width: 700px) {
+  .top { grid-template-columns: 1fr auto; grid-template-areas: "name about" "tabs tabs"; }
+  .top .top__name { grid-area: name; }
+  .top__about { grid-area: about; }
+  .tabs { grid-area: tabs; }
+  .row__link, .ph__head {
+    grid-template-columns: 1fr 1fr; grid-template-areas: "format year" "title title";
+    column-gap: .75rem; row-gap: .3rem;
+  }
+  .row__link { padding: .5em 0 .1em; }
+  .row__title { font-size: clamp(3.1rem, 16vw, 6.5rem); }
+  .hinge { grid-template-columns: 1fr; row-gap: 2.5rem; }
+  .hinge > :first-child { justify-self: start; text-align: left; }
+  .pb__media { grid-template-columns: 1fr; gap: var(--s1, 8px); }
+  .ab { min-height: 0; display: block; padding-top: clamp(28px, 6vh, 56px); }
+  .ab__flower { left: calc(var(--pad) + 34px); width: clamp(34px, 9vw, 54px); background-size: auto 420px; }
+  .ab__layout {
+    display: block; height: auto; margin-left: clamp(92px, 24vw, 130px); margin-right: var(--pad);
+  }
+  .ab__portrait { height: auto; max-width: 320px; margin: 0 auto; }
+  .ab__portrait img { height: auto; aspect-ratio: 4 / 5; }
+  .ab__right { display: block; height: auto; margin-top: clamp(28px, 6vh, 48px); }
+  .ab__text { max-width: 320px; margin: 0 auto; overflow: visible; font-size: clamp(14px, 3.8vw, 16px); }
+  .ab__contact { margin-top: clamp(40px, 9vh, 72px); }
+  .connect { font-size: clamp(.85rem, 3.6vw, 1.05rem); margin-bottom: clamp(12px, 2.4vh, 22px); }
+  .ab__mail { font-size: clamp(1.5rem, 7.2vw, 2.4rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.intro .top:not(.panel__bar) .top__name { transform: none; }
+  .row { animation: none; }
+  .reveal__img, .reveal__img.is-on, .pn__img { transform: none; }
+  .panel, .panel.is-open, .panel__body { transition: visibility 0s; }
+}
+</style>
+</head>
+<body>
+
+<div class="reveal" id="reveal" aria-hidden="true">
+  <div class="reveal__shade"></div>
+</div>
+
+<header class="top">
+  <a class="top__name" href="#direction"><span class="glyph g-name" aria-hidden="true"></span><span class="sr" data-name>Razan Saylami</span></a>
+  <nav class="tabs" role="tablist" aria-label="Work">
+    <button class="tab" role="tab" data-tab="direction" aria-selected="true" aria-controls="list"><span class="glyph g-direction" aria-hidden="true"></span><span class="sr">Direction</span></button>
+    <span class="tabs__sep" aria-hidden="true">\</span>
+    <button class="tab" role="tab" data-tab="production-design" aria-selected="false" aria-controls="list"><span class="glyph g-production" aria-hidden="true"></span><span class="sr">Production Design</span></button>
+  </nav>
+  <a class="top__about" href="#about"><span class="glyph g-about" aria-hidden="true"></span><span class="sr">About</span></a>
+</header>
+
+<main>
+  <ul class="list" id="list" role="tabpanel"></ul>
+</main>
+
+<footer class="foot">
+  <a data-email href="#">Email</a>
+  <a data-instagram href="#" target="_blank" rel="noopener">Instagram</a>
+</footer>
+
+<div class="cue" aria-hidden="true">Scroll</div>
+
+<section class="panel" id="panel" tabindex="-1" aria-hidden="true" inert>
+  <header class="top panel__bar">
+    <a class="top__name" href="#direction" data-home><span class="glyph g-name" aria-hidden="true"></span><span class="sr" data-name>Razan Saylami</span></a>
+    <nav class="tabs" aria-label="Work">
+      <a class="tab" href="#direction" data-ptab="direction"><span class="glyph g-direction" aria-hidden="true"></span><span class="sr">Direction</span></a>
+      <span class="tabs__sep" aria-hidden="true">\</span>
+      <a class="tab" href="#production-design" data-ptab="production-design"><span class="glyph g-production" aria-hidden="true"></span><span class="sr">Production Design</span></a>
+    </nav>
+    <a class="top__about" href="#about" data-pabout><span class="glyph g-about" aria-hidden="true"></span><span class="sr">About</span></a>
+  </header>
+  <div class="panel__body" id="panelBody"></div>
+</section>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox__close" id="lightboxClose">Close</button>
+  <button class="lightbox__prev" id="lightboxPrev" aria-label="Previous image">‹</button>
+  <img class="lightbox__img" id="lightboxImg" alt="">
+  <button class="lightbox__next" id="lightboxNext" aria-label="Next image">›</button>
+  <div class="lightbox__count" id="lightboxCount"></div>
+</div>
+
+<script>
+(function () {
+  // Built-in copy of the content, used only when content/*.json can't be loaded
+  // (e.g. opening the file directly). The live site always reads the JSON files.
+  var FALLBACK_SETTINGS = {"name": "Razan Saylami", "description": "Razan Saylami, director and production designer.", "about": "I am a Lebanese director and production designer, born and raised in the GCC, with over five years of experience across narrative films, music videos, and commercials. A graduate of the New York Film Academy, I’ve developed a practice grounded in strong visual language, bringing to life stories rooted in character, emotion, and the liminality of cultures. My heritage and experiences deeply influence my approach, conceptualisation and visual expression. As a director and production designer, the heart of my work lies in developing creative concepts that translate ideas and stories into cohesive cinematic experiences. These endeavours have led to my work being featured in several critically acclaimed projects, including festival-winning films.", "lead": "", "portrait": "images/portrait.jpg", "email": "razanalsaylami@gmail.com", "instagram": "https://www.instagram.com/razans_pov/", "links": [{"label": "Instagram", "url": "https://www.instagram.com/razans_pov/"}, {"label": "LinkedIn", "url": "https://www.linkedin.com/in/razan-saylami-145621431/"}, {"label": "IMDb", "url": "https://www.imdb.com/name/nm13736114/"}], "background": "#5B6A46", "textColor": "#FCF9F4", "mutedColor": "#B2B6A4", "arabicColor": "#B2B6A4", "directionLabel": "Direction", "productionLabel": "Production Design"};
+  var FALLBACK_PROJECTS = [{"title": "Displaced", "category": "direction", "year": "2025", "format": "Short film", "role": "Director", "credits": [{"role": "Director", "name": "Razan Saylami"}, {"role": "Producer", "name": "Sehran Khan, Razan Saylami"}, {"role": "Director of photography", "name": "Siddharth Chawla"}, {"role": "Production designer", "name": "Skyler Atkinson"}], "cover": "images/displaced-hero.jpg", "focus": "right", "description": "Displaced follows a woman who escapes the devastation of war in her homeland and seeks safety in a new country. There, she struggles with a profound sense of disconnection and guilt – feeling like an outsider, and as if simply surviving in this new place is a betrayal of her roots. Through a symbolic and emotional journey, she comes to understand that while this new land may never truly feel like home, she can carry her culture with her, creating a life that bridges both worlds.", "video": "", "gallery": ["images/displaced-poster.jpg", "images/displaced-title.jpg", "images/still-05.jpg", "images/still-07.jpg", "images/still-02.jpg", "images/still-08.jpg"], "laurels": ["images/laurels/displaced/liff-best-international-short.png", "images/laurels/displaced/oceanside-nominee.png", "images/laurels/displaced/antiwar-official-selection.png", "images/laurels/displaced/beirut-womens-official-selection.png", "images/laurels/displaced/riff-official-selection.png"]}, {"title": "Four Walls", "category": "direction", "year": "2022", "format": "Short film", "role": "Director", "credits": [{"role": "Director", "name": "Razan Saylami"}, {"role": "Producer", "name": "Yashvi Mulchandani"}, {"role": "Director of photography", "name": "Nadan Lawande"}, {"role": "Production designer", "name": "Shoaib Shawl"}], "cover": "images/four-walls-hero.jpg", "focus": "right", "description": "Andrew Goblaski, an artist has been given an opportunity of a lifetime but has lost his touch, as he struggles to find himself he meets someone that guides him in the right direction.", "video": "", "gallery": ["images/four-walls-a.jpg", "images/four-walls-b.jpg", "images/four-walls-c.jpg", "images/four-walls-d.jpg", "images/four-walls-e.jpg", "images/four-walls-f.jpg", "images/four-walls-g.jpg", "images/four-walls-h.jpg", "images/four-walls-i.jpg"]}, {"title": "Worth", "category": "direction", "year": "2024", "format": "Music video", "role": "Director", "credits": [{"role": "Artist", "name": "Kejae"}, {"role": "Director", "name": "Razan Saylami"}, {"role": "Producer", "name": "Razan Saylami"}, {"role": "Director of photography", "name": "Tanay Shah"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/worth-hero.jpg", "focus": "center", "description": "", "video": "", "gallery": ["images/worth-a.jpg", "images/worth-b.jpg", "images/worth-c.jpg"]}, {"title": "Talk Too Much", "category": "direction", "year": "2024", "format": "Music video", "role": "Director", "credits": [{"role": "Artist", "name": "Kejae"}, {"role": "Director", "name": "Razan Saylami"}, {"role": "Producer", "name": "Razan Saylami"}, {"role": "Director of photography", "name": "Tanay Shah"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/talk-too-much-hero.jpg", "focus": "center", "description": "", "video": "", "gallery": ["images/talk-too-much-a.jpg", "images/talk-too-much-b.jpg", "images/talk-too-much-c.jpg", "images/talk-too-much-d.jpg", "images/talk-too-much-e.jpg", "images/talk-too-much-f.jpg", "images/talk-too-much-g.jpg", "images/talk-too-much-h.jpg"]}, {"title": "Girl of Now", "category": "direction", "year": "2026", "format": "Spec commercial", "role": "Director", "credits": [{"role": "Director", "name": "Razan Saylami"}, {"role": "Producer", "name": "Razan Saylami"}, {"role": "Director of photography", "name": "Siddharth Chawla"}, {"role": "Production designer", "name": "Skyler Atkinson"}], "cover": "images/girl-of-now-hero.jpg", "focus": "center", "description": "Spec Commercial for Girl of Now, a fragrance by Elie Saab.", "video": "", "gallery": ["images/girl-of-now-a.jpg", "images/girl-of-now-b.jpg", "images/girl-of-now-c.jpg", "images/girl-of-now-d.jpg", "images/girl-of-now-e.jpg", "images/girl-of-now-f.jpg", "images/girl-of-now-g.jpg"]}, {"title": "Alchemy in Venice", "category": "production-design", "year": "2026", "format": "Feature film", "role": "Production designer", "credits": [{"role": "Director", "name": "Jon Fitzgerald"}, {"role": "Producer", "name": "Jon Fitzgerald, Carey Campbell"}, {"role": "Director of photography", "name": "James B Hammond, Vince Nett"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/alchemy-in-venice-hero.jpg", "focus": "center", "description": "Set in Venice Beach, Alchemy in Venice follows three artists whose paths unexpectedly intersect. As their journeys unfold, art becomes a catalyst for creativity, sustainability, and transformation.", "video": "https://www.youtube.com/watch?v=x1L7res2OYQ", "gallery": [], "laurels": ["images/laurels/alchemy-in-venice/awareness-festival-official-selection.png", "images/laurels/alchemy-in-venice/official-selection-white.png"], "coverInGallery": false}, {"title": "312 Days", "category": "production-design", "year": "2026", "format": "Feature film", "role": "Production designer", "credits": [{"role": "Director", "name": "Annie Liones Nguyen"}, {"role": "Producer", "name": "Sam Johnson"}, {"role": "Director of photography", "name": "Davide Picci"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/312-days-hero.jpg", "focus": "center", "description": "A couple on the verge of divorce are forced to live together during the COVID-19 lockdown spanning 312 days in Los Angeles, California.", "video": "", "gallery": ["images/312-days-a.jpg", "images/312-days-b.jpg", "images/312-days-c.jpg", "images/312-days-d.jpg", "images/312-days-e.jpg", "images/312-days-f.jpg", "images/312-days-g.jpg", "images/312-days-h.jpg", "images/312-days-i.jpg", "images/312-days-j.jpg", "images/312-days-k.jpg"]}, {"title": "Blue Top", "category": "production-design", "year": "2024", "format": "Short film", "role": "Production designer", "credits": [{"role": "Director", "name": "Anna O’Donnell"}, {"role": "Producer", "name": "Shreya Jha"}, {"role": "Director of photography", "name": "Siddharth Chawla"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/blue-top-hero.jpg", "focus": "center", "description": "While getting ready for a party, high schooler Allie insists her friends help her find a specific blue top. What comes next is a deeper understanding among the girls who are on the brink of womanhood.", "video": "", "gallery": ["images/blue-top-a.jpg", "images/blue-top-b.jpg", "images/blue-top-c.jpg", "images/blue-top-d.jpg", "images/blue-top-e.jpg", "images/blue-top-f.jpg"], "laurels": ["images/laurels/blue-top/la-shorts-official-selection.png"]}, {"title": "The Void", "category": "production-design", "year": "2023", "format": "Short film", "role": "Production designer", "credits": [{"role": "Director", "name": "Sashwat Mohta"}, {"role": "Producer", "name": "Sehran Khan"}, {"role": "Director of photography", "name": "Siddharth Chawla"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/the-void-hero.jpg", "focus": "left", "description": "A once brilliant teenager battling drug addiction seeks family support to heal his emotional wounds, but his conservative father’s harsh discipline and mistrust risk tearing their family apart.", "video": "", "gallery": ["images/the-void-a.jpg", "images/the-void-b.jpg", "images/the-void-c.jpg", "images/the-void-d.jpg", "images/the-void-e.jpg", "images/the-void-f.jpg", "images/the-void-g.jpg", "images/the-void-h.jpg", "images/the-void-i.jpg"], "laurels": ["images/laurels/the-void/beverly-hills-official-selection.png", "images/laurels/the-void/borrego-springs-official-selection.png", "images/laurels/the-void/crystal-palace-official-selection.png", "images/laurels/the-void/dunedin-official-selection.png", "images/laurels/the-void/jaipur-official-selection.png", "images/laurels/the-void/short-sweet-official-selection.png", "images/laurels/the-void/poppy-jasper-official-selection.png"]}, {"title": "Many Thousands Lost", "category": "production-design", "year": "2024", "format": "Short film", "role": "Production designer", "credits": [{"role": "Director", "name": "Jehan Patterson"}, {"role": "Producer", "name": "Amirah Adem, Marlana Dunn, Chirsten Vanderbilt Ellis"}, {"role": "Director of photography", "name": "Caileigh Gold"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/many-thousands-lost-hero.jpg", "focus": "left", "description": "After believing him to be at work, an inquisitive young girl must come to terms with losing her father once she learns he has been sentenced to death.", "video": "", "gallery": ["images/many-thousands-lost-a.jpg", "images/many-thousands-lost-b.jpg", "images/many-thousands-lost-c.jpg", "images/many-thousands-lost-d.jpg", "images/many-thousands-lost-e.jpg", "images/many-thousands-lost-f.jpg", "images/many-thousands-lost-g.jpg", "images/many-thousands-lost-h.jpg", "images/many-thousands-lost-i.jpg", "images/many-thousands-lost-j.jpg"], "laurels": ["images/laurels/many-thousands-lost/bsa-stamps-action.png", "images/laurels/many-thousands-lost/detroit-black-film-festival.png", "images/laurels/many-thousands-lost/maryland-film-fest.png", "images/laurels/many-thousands-lost/sf-black-film-festival.png", "images/laurels/many-thousands-lost/american-black-film-festival.png", "images/laurels/many-thousands-lost/san-quentin-film-festival.png", "images/laurels/many-thousands-lost/vbiff-laurel.png"]}, {"title": "Inside These Walls", "category": "production-design", "year": "2025", "format": "Short film", "role": "Production designer", "credits": [{"role": "Director", "name": "Melissa Fisher"}, {"role": "Producer", "name": "Heather Brawley, Katie Gunderson"}, {"role": "Director of photography", "name": "Boa Simon"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/inside-these-walls-hero.jpg", "focus": "right", "description": "An estranged couple and their young daughter come together for twenty-four hours and attempt to navigate an uncertain future.", "video": "", "gallery": ["images/inside-these-walls-a.jpg", "images/inside-these-walls-b.jpg", "images/inside-these-walls-c.jpg", "images/inside-these-walls-d.jpg", "images/inside-these-walls-e.jpg", "images/inside-these-walls-f.jpg", "images/inside-these-walls-g.jpg", "images/inside-these-walls-h.jpg", "images/inside-these-walls-i.jpg", "images/inside-these-walls-j.jpg", "images/inside-these-walls-k.jpg", "images/inside-these-walls-l.jpg"], "laurels": ["images/laurels/inside-these-walls/dwfla-select.png", "images/laurels/inside-these-walls/laurel-74.png", "images/laurels/inside-these-walls/sfiff-official-selection.png", "images/laurels/inside-these-walls/salute-programmers-choice-winner.png", "images/laurels/inside-these-walls/deadcenter-official-selection.png"]}, {"title": "The Yellow Subconscious of Sir Ben", "category": "production-design", "year": "2022", "format": "Short film", "role": "Production designer", "credits": [{"role": "Director", "name": "Caio Toretta"}, {"role": "Producer", "name": "Sehran Khan"}, {"role": "Director of photography", "name": "Siddharth Chawla"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/the-yellow-subconscious-of-sir-ben-hero.jpg", "focus": "center", "description": "A masked individual conflicts with their perceptions of life and reflects their ambitions within a world dominated with a status quo.", "video": "", "gallery": ["images/the-yellow-subconscious-of-sir-ben-a.jpg", "images/the-yellow-subconscious-of-sir-ben-b.jpg", "images/the-yellow-subconscious-of-sir-ben-c.jpg", "images/the-yellow-subconscious-of-sir-ben-d.jpg", "images/the-yellow-subconscious-of-sir-ben-e.jpg", "images/the-yellow-subconscious-of-sir-ben-f.jpg", "images/the-yellow-subconscious-of-sir-ben-g.jpg", "images/the-yellow-subconscious-of-sir-ben-h.jpg", "images/the-yellow-subconscious-of-sir-ben-i.jpg", "images/the-yellow-subconscious-of-sir-ben-j.jpg", "images/the-yellow-subconscious-of-sir-ben-k.jpg"], "laurels": ["images/laurels/the-yellow-subconscious-of-sir-ben/angaelica-official-selection.png", "images/laurels/the-yellow-subconscious-of-sir-ben/giffoni-shock-official-selection.png"]}, {"title": "Legacy", "category": "production-design", "year": "2025", "format": "Short film", "role": "Production designer", "credits": [{"role": "Director", "name": "Yu Hsuan Ting"}, {"role": "Producer", "name": "Shreya Jha, Grace Galarraga, Tanya Agarwal"}, {"role": "Director of photography", "name": "Bella Zhu"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/legacy-hero.jpg", "focus": "right", "description": "When a debt-ridden technician takes a high-stakes job at an illegal memory-wiping facility, she uncovers the preserved memories of a dying researcher whose final wish is to save a rare medicinal plant – Silver lilies. The technician must choose to erase the legacy for profit or risk her future to preserve it.", "video": "", "gallery": ["images/legacy-a.jpg", "images/legacy-b.jpg", "images/legacy-c.jpg", "images/legacy-d.jpg", "images/legacy-e.jpg", "images/legacy-f.jpg", "images/legacy-g.jpg", "images/legacy-h.jpg", "images/legacy-i.jpg", "images/legacy-j.jpg", "images/legacy-k.jpg", "images/legacy-l.jpg", "images/legacy-m.jpg"], "laurels": ["images/laurels/legacy/la-independent-women-award-winner.png", "images/laurels/legacy/la-shorts-official-selection.png"]}, {"title": "Together", "category": "production-design", "year": "2025", "format": "Music video", "role": "Production designer", "credits": [{"role": "Artist", "name": "Shubh"}, {"role": "Director", "name": "Rubbal GTR"}, {"role": "Producer", "name": "Sehran Khan, Siddharth Chawla"}, {"role": "Director of photography", "name": "Josh Hill"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/together-hero.jpg", "focus": "right", "description": "", "video": "", "gallery": ["images/together-a.jpg", "images/together-b.jpg", "images/together-c.jpg", "images/together-d.jpg", "images/together-e.jpg", "images/together-f.jpg", "images/together-g.jpg", "images/together-h.jpg", "images/together-i.jpg", "images/together-j.jpg", "images/together-k.jpg", "images/together-l.jpg"]}, {"title": "Dealer", "category": "production-design", "year": "2026", "format": "Music video", "role": "Production designer", "credits": [{"role": "Artist", "name": "Diljit Dosanjh"}, {"role": "Director", "name": "Rubbal GTR"}, {"role": "Producer", "name": "Sehran Khan, Siddharth Chawla"}, {"role": "Director of photography", "name": "Andrew Johnston"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/dealer-hero.jpg", "focus": "center", "description": "", "video": "", "gallery": ["images/dealer-a.jpg", "images/dealer-b.jpg", "images/dealer-c.jpg", "images/dealer-d.jpg", "images/dealer-e.jpg"]}, {"title": "Morni", "category": "production-design", "year": "2026", "format": "Music video", "role": "Production designer", "credits": [{"role": "Artist", "name": "Diljit Dosanjh"}, {"role": "Director", "name": "Rubbal GTR"}, {"role": "Producer", "name": "Sehran Khan, Siddharth Chawla"}, {"role": "Director of photography", "name": "Andrew Johnston"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/morni-hero.jpg", "focus": "center", "description": "", "video": "", "gallery": ["images/morni-a.jpg", "images/morni-b.jpg", "images/morni-c.jpg", "images/morni-d.jpg", "images/morni-e.jpg", "images/morni-f.jpg", "images/morni-g.jpg", "images/morni-h.jpg"]}, {"title": "Dhahia Juice", "category": "production-design", "year": "2024", "format": "Commercial", "role": "Production designer", "credits": [{"role": "Creative director", "name": "Husseiinzs"}, {"role": "Director of photography", "name": "Mohamed El Gohary"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/dhahia-juice-preview.jpg", "focus": "center", "description": "Commercial for Dhahia Juice’s Arabian Gulf Cup campaign.", "video": "", "gallery": ["images/dhahia-juice-a.jpg", "images/dhahia-juice-b.jpg", "images/dhahia-juice-c.jpg"]}, {"title": "Smallest AI", "category": "production-design", "year": "2025", "format": "Commercial", "role": "Production designer", "credits": [{"role": "Director", "name": "Ronit Soin, Devansh Pawan"}, {"role": "Producer", "name": "Sehran Khan"}, {"role": "Director of photography", "name": "Sachin Vinay"}, {"role": "Production designer", "name": "Razan Saylami"}], "cover": "images/smallest-ai-hero.jpg", "focus": "center", "description": "", "video": "", "gallery": ["images/smallest-ai-a.jpg", "images/smallest-ai-b.jpg", "images/smallest-ai-c.jpg", "images/smallest-ai-d.jpg", "images/smallest-ai-e.jpg", "images/smallest-ai-f.jpg", "images/smallest-ai-g.jpg", "images/smallest-ai-h.jpg", "images/smallest-ai-i.jpg", "images/smallest-ai-j.jpg", "images/smallest-ai-k.jpg", "images/smallest-ai-l.jpg", "images/smallest-ai-m.jpg"]}];
+
+  var CATS = ["direction", "production-design"];
+  // Which part of a still stays in view when the screen crops it (mostly phones held upright)
+  var FOCUS = { left: "25% 50%", center: "50% 50%", right: "75% 50%" };
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var noHover = window.matchMedia("(hover: none)");
+  var $ = function (s, el) { return (el || document).querySelector(s); };
+  var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+
+  var settings, projects, current = null, activeIndex = -1, lastFocus = null, first = true;
+  var lightboxGallery = [], lightboxIndex = 0, lightboxReturnFocus = null;
+
+  function getJSON(path, fallback) {
+    return fetch(path).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .catch(function () { return fallback; });
+  }
+  function slugify(s) {
+    return String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function isHex(c) { return /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(String(c || "").trim()); }
+  function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
+  function placeholder(key) {
+    var h = hash(key);
+    return "linear-gradient(" + (h % 360) + "deg, hsl(" + (48 + h % 40) + " 26% 36%), hsl(" + (40 + (h >> 4) % 50) + " 22% 15%))";
+  }
+  function cssUrl(src) { return 'url("' + String(src).replace(/["\\\s]/g, encodeURIComponent) + '")'; }
+  function bg(src, key) { return src ? cssUrl(src) + ", " + placeholder(key) : placeholder(key); }
+  function imgStyle(p) { return "background-image:" + bg(p.cover, p._slug) + ";background-position:" + (FOCUS[p.focus] || FOCUS.center); }
+  function paragraphs(text) {
+    return String(text || "").split(/\n\s*\n/).filter(function (t) { return t.trim(); })
+      .map(function (t) { return "<p>" + esc(t.trim()).replace(/\n/g, "<br>") + "</p>"; }).join("");
+  }
+  function embed(url) {
+    if (!url) return "";
+    var m = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+    if (m) return "https://www.youtube-nocookie.com/embed/" + m[1];
+    m = url.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([0-9a-f]+))?/);
+    if (m) return "https://player.vimeo.com/video/" + m[1] + (m[2] ? "?h=" + m[2] : "");
+    return "";
+  }
+
+  /* ---------- Settings ---------- */
+  function applySettings() {
+    var s = settings, root = document.documentElement.style;
+    if (isHex(s.background)) root.setProperty("--bg", s.background.trim());
+    if (isHex(s.textColor)) root.setProperty("--fg", s.textColor.trim());
+    if (isHex(s.mutedColor)) root.setProperty("--muted", s.mutedColor.trim());
+    if (isHex(s.arabicColor)) root.setProperty("--arabic", s.arabicColor.trim());
+    if (s.name) document.title = s.name;
+    $('meta[name="description"]').setAttribute("content", s.description || "");
+    $$("[data-name]").forEach(function (el) { el.textContent = s.name || ""; });
+    $$('[data-tab="direction"] .sr, [data-ptab="direction"] .sr').forEach(function (el) { el.textContent = s.directionLabel || "Direction"; });
+    $$('[data-tab="production-design"] .sr, [data-ptab="production-design"] .sr').forEach(function (el) { el.textContent = s.productionLabel || "Production Design"; });
+    var mail = $("[data-email]"), ig = $("[data-instagram]");
+    if (s.email) { mail.href = "mailto:" + s.email; mail.textContent = s.email; } else mail.remove();
+    if (s.instagram) ig.href = s.instagram; else ig.remove();
+  }
+
+  /* ---------- Reveal layers (one per project, so images preload and crossfade) ---------- */
+  function buildReveal() {
+    var wrap = $("#reveal"), shade = $(".reveal__shade", wrap);
+    projects.forEach(function (p, i) {
+      var d = document.createElement("div");
+      d.className = "reveal__img";
+      d.dataset.i = i;
+      d.style.backgroundImage = bg(p.cover, p._slug);
+      d.style.backgroundPosition = FOCUS[p.focus] || FOCUS.center;
+      wrap.insertBefore(d, shade);
+    });
+  }
+  function activate(i) {
+    if (i === activeIndex) return;
+    activeIndex = i;
+    $$(".reveal__img").forEach(function (n) { n.classList.toggle("is-on", +n.dataset.i === i); });
+    $$(".row").forEach(function (r) { r.classList.toggle("is-active", +r.dataset.i === i); });
+    $("#list").classList.toggle("is-hovering", i >= 0);
+    document.body.classList.toggle("is-revealing", i >= 0);
+  }
+
+  /* ---------- Home list ---------- */
+  function renderList() {
+    var list = $("#list"), k = 0;
+    list.innerHTML = projects.map(function (p, i) {
+      if (p.category !== current) return "";
+      return '<li class="row" data-i="' + i + '" style="--k:' + (k++) + '">' +
+        '<a class="row__link" href="#' + current + "/" + p._slug + '">' +
+        '<span class="label row__format">' + esc(p.format) + "</span>" +
+        '<span class="t-display row__title">' + esc(p.title) + "</span>" +
+        '<span class="label row__year">' + esc(p.year) + "</span></a></li>";
+    }).join("");
+    setupTouch();
+  }
+  // Phones have no hover, so the title nearest the middle of the screen takes over the background.
+  var ticking = false;
+  function nearest() {
+    ticking = false;
+    if (!noHover.matches || $("#panel").classList.contains("is-open")) return;
+    if (intro.on && intro.p < .9) { activate(-1); return; }
+    var mid = window.innerHeight / 2, best = -1, bestD = Infinity;
+    $$(".row").forEach(function (r) {
+      var b = r.getBoundingClientRect(), d = Math.abs(b.top + b.height / 2 - mid);
+      if (d < bestD) { bestD = d; best = +r.dataset.i; }
+    });
+    if (best >= 0) activate(best);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { paintIntro(); nearest(); }); } }
+  function setupTouch() { if (noHover.matches) requestAnimationFrame(nearest); }
+  function setCategory(cat) {
+    if (CATS.indexOf(cat) < 0) cat = current || "direction";
+    if (cat === current) return;
+    current = cat;
+    $$(".tab").forEach(function (t) { t.setAttribute("aria-selected", String(t.dataset.tab === cat)); });
+    activate(-1);
+    var list = $("#list");
+    if (first || reduceMotion) { renderList(); first = false; return; }
+    list.classList.add("is-leaving");
+    setTimeout(function () { renderList(); list.classList.remove("is-leaving"); }, 200);
+  }
+
+  /* ---------- Page layer ---------- */
+  function openPanel(html, section) {
+    skipIntro();
+    var bar = $(".panel__bar");
+    if (bar) document.documentElement.style.setProperty("--barH", bar.offsetHeight + "px");
+    var panel = $("#panel"), body = $("#panelBody");
+    var wasOpen = panel.classList.contains("is-open");
+    if (!wasOpen) lastFocus = document.activeElement;
+    $("[data-home]").setAttribute("href", "#" + current);
+    // mark where we are in the page's own top bar
+    $$("[data-ptab]").forEach(function (a) { a.setAttribute("aria-current", a.dataset.ptab === section ? "page" : "false"); });
+    $("[data-pabout]").setAttribute("aria-current", section === "about" ? "page" : "false");
+    function swap() {
+      body.innerHTML = html;
+      panel.scrollTop = 0;
+      body.classList.remove("is-swapping");
+    }
+    if (wasOpen && !reduceMotion) { body.classList.add("is-swapping"); setTimeout(swap, 220); } else swap();
+    panel.classList.add("is-open");
+    panel.removeAttribute("inert");
+    panel.setAttribute("aria-hidden", "false");
+    document.body.classList.add("is-locked");
+    activate(-1);
+    setTimeout(function () { $("#panel").focus({ preventScroll: true }); }, reduceMotion ? 0 : 400);
+  }
+  function closePanel() {
+    var panel = $("#panel");
+    if (!panel.classList.contains("is-open")) return;
+    panel.classList.remove("is-open");
+    panel.setAttribute("inert", "");
+    panel.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("is-locked");
+    if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+    setupTouch();
+  }
+  function figure(src, key, alt, idx) {
+    return '<button type="button" class="fig" data-idx="' + idx + '" style="background-image:' + esc(placeholder(key)) + '" aria-label="Open image ' + (idx + 1) + '">' +
+      '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" ' +
+      "onerror=\"this.parentNode.classList.add('is-missing');this.remove()\"></button>";
+  }
+  function projectHTML(p) {
+    var credits = (p.credits || []).filter(function (c) { return c && c.name; });
+    if (!credits.length && p.role) credits = [{ role: p.role, name: settings.name }];
+    var video = embed(p.video);
+    // normally the cover doubles as the first still on the project page; when a project sets
+    // coverInGallery to false, the cover is used only for the hover preview on the home list —
+    // the project page itself shows just the gallery (and the video, if there is one)
+    var stills = (p.coverInGallery === false ? (p.gallery || []) : [p.cover].concat(p.gallery || [])).filter(Boolean);
+    lightboxGallery = stills;   // what the lightbox opened from this page cycles through
+
+    var media = [];
+    if (video) media.push('<div class="pb__video"><iframe src="' + esc(video) + '" title="' + esc(p.title) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>');
+    stills.forEach(function (src, n) {
+      media.push(figure(src, p._slug + n, p.title + ", still " + (n + 1), n));
+    });
+
+    var same = projects.filter(function (q) { return q.category === p.category; });
+    var next = same.length > 1 ? same[(same.indexOf(p) + 1) % same.length] : null;
+
+    return '<header class="ph"><div class="ph__head">' +
+          '<span class="label ph__format">' + esc(p.format) + "</span>" +
+          '<h1 class="t-display ph__title">' + esc(p.title) + "</h1>" +
+          '<span class="label ph__year">' + esc(p.year) + "</span>" +
+        "</div></header>" +
+      '<div class="pb">' +
+        ((credits.length || p.description) ? '<div class="hinge">' +
+          '<dl class="pb__credits">' + credits.map(function (c) {
+            return "<div><dt>" + esc(c.role) + "</dt><dd>" + esc(c.name) + "</dd></div>";
+          }).join("") + "</dl>" +
+          '<div class="pb__text">' + paragraphs(p.description) + "</div>" +
+        "</div>" : "") +
+        ((p.laurels || []).length ? '<div class="pb__laurels">' + p.laurels.map(function (src) {
+          return '<img src="' + esc(src) + '" alt="Festival laurel" loading="lazy">';
+        }).join("") + "</div>" : "") +
+        (media.length ? '<div class="pb__media">' + media.join("") + "</div>" : "") +
+      "</div>" +
+      (next ? '<a class="pn" href="#' + next.category + "/" + next._slug + '">' +
+        '<span class="pn__img" style="' + esc(imgStyle(next)) + '"></span>' +
+        '<span class="pn__label">Next project</span>' +
+        '<span class="t-display pn__title">' + esc(next.title) + "</span></a>" : "");
+  }
+  function aboutHTML() {
+    var s = settings;
+    var links = (s.links || []).filter(function (l) { return l && l.label; });
+    return '<div class="ab">' +
+      '<div class="ab__flower" aria-hidden="true"></div>' +
+      '<div class="ab__layout">' +
+        (s.portrait ? '<figure class="ab__portrait"><img src="' + esc(s.portrait) + '" alt="Portrait of ' + esc(s.name) + '"></figure>' : "") +
+        '<div class="ab__right">' +
+          '<div class="ab__text">' +
+            (s.lead ? '<p class="ab__lead">' + esc(s.lead) + "</p>" : "") + paragraphs(s.about) +
+          "</div>" +
+          '<section class="ab__contact">' +
+            '<div class="connect"><span class="connect__ar" dir="rtl" lang="ar" aria-hidden="true">للتواصل</span>' +
+              '<h2 class="connect__en">Let’s Connect</h2></div>' +
+            (s.email ? '<a class="ab__mail" href="mailto:' + esc(s.email) + '">' + esc(s.email) + "</a>" : "") +
+            (links.length ? '<div class="ab__links">' + links.map(function (l) {
+              return l.url ? '<a href="' + esc(l.url) + '"' +
+                   (/^https?:/i.test(l.url) ? ' target="_blank" rel="noopener"' : "") + ">" + esc(l.label) + "</a>"
+                 : "<span>" + esc(l.label) + "</span>";
+            }).join("") + "</div>" : "") +
+          "</section>" +
+        "</div>" +
+      "</div>" +
+    "</div>";
+  }
+
+  /* ---------- Routing: #direction, #production-design, #direction/project-slug, #about ---------- */
+  function readHash() { try { return decodeURIComponent(location.hash.slice(1)); } catch (e) { return ""; } }
+  // Go somewhere inside the site. Updates the address bar when the browser allows it (so links can be
+  // shared and Back works), and routes directly when it doesn't, e.g. inside embedded previews.
+  function go(h) {
+    h = String(h || "").replace(/^#/, "");
+    try { if (readHash() !== h) location.hash = h; } catch (e) {}
+    if (readHash() !== h) route(h);
+  }
+  function route(h) {
+    if (typeof h !== "string") h = readHash();
+    closeLightbox();   // never leave it open over a page it no longer belongs to
+    if (h === "about") { setCategory(current); openPanel(aboutHTML(), "about"); return; }
+    var parts = h.split("/");
+    setCategory(parts[0]);
+    if (parts[1]) {
+      var p = projects.filter(function (q) { return q._slug === parts[1] && q.category === parts[0]; })[0];
+      if (p) { openPanel(projectHTML(p), p.category); return; }
+    }
+    closePanel();
+  }
+
+  /* ---------- Opening screen ---------- */
+  var intro = { on: false, p: 1, nat: null };
+  function introHeight() { return window.innerHeight; }
+  function measureName() {
+    var el = $(".top:not(.panel__bar) .top__name");
+    var glyph = el && $(".glyph", el);
+    if (!el || !glyph) return null;
+    // measure the small, in-flow size first. The glyph is position:absolute whenever the intro
+    // is active (so its large native box never affects the header's own layout) — that has to be
+    // suspended for this measurement, or an absolutely positioned, width:auto element with only
+    // absolutely positioned children collapses to 0 instead of sizing to its natural content.
+    var prevPos = glyph.style.position, prevW = glyph.style.width, prevT = glyph.style.transform;
+    glyph.style.position = "static";
+    glyph.style.width = "";
+    glyph.style.transform = "none";
+    var r = el.getBoundingClientRect();
+    var small = { w: r.width, h: r.height, left: r.left, top: r.top };
+    // the biggest this ever needs to render at: the opening screen's target width
+    var target = Math.min(window.innerWidth * (window.innerWidth < 700 ? .78 : .46), 620);
+    var native = Math.max(target, small.w, 1);
+    // render at that native size from now on — every future transform only ever scales it DOWN
+    glyph.style.position = prevPos;
+    glyph.style.width = native + "px";
+    glyph.style.transform = prevT;
+    return { small: small, native: native, target: target };
+  }
+  function layoutVars() {
+    var root = document.documentElement.style;
+    var top = $(".top"), foot = $(".foot");
+    root.setProperty("--topH", (top ? top.offsetHeight : 0) + "px");
+    root.setProperty("--footH", (foot ? foot.offsetHeight : 0) + "px");
+  }
+  function paintIntro() {
+    if (!intro.on) return;
+    var root = document.documentElement;
+    var p = Math.min(1, Math.max(0, window.scrollY / introHeight()));
+    intro.p = p;
+    // eased so the name leaves slowly, travels, then settles rather than tracking the wheel one to one
+    var e = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    root.style.setProperty("--p", e);
+    root.setAttribute("data-intro", p > .985 ? "off" : "on");
+    var n = intro.nat;
+    if (!n) return;
+    var k = 1 - e;                                  // 1 at the top of the page, 0 once it's home
+    // the glyph now renders natively at n.native (its largest size), positioned at the small
+    // header slot's top-left by default (see CSS): scale 1 shows it full-size, scale (small/native)
+    // shrinks it down to exactly the small header size — always a reduction, never a magnification
+    var restScale = n.small.w / n.native;
+    var dx = (window.innerWidth - n.native) / 2 - n.small.left;
+    var dy = (window.innerHeight - n.small.h) / 2 - n.small.top;
+    root.style.setProperty("--nx", (dx * k) + "px");
+    root.style.setProperty("--ny", (dy * k) + "px");
+    root.style.setProperty("--ns", (restScale + (1 - restScale) * k));
+  }
+  function setupIntro() {
+    var root = document.documentElement;
+    // the opening screen only makes sense on the lists, and only when motion is welcome
+    var wanted = !reduceMotion;
+    if (wanted !== intro.on) {
+      intro.on = wanted;
+      root.classList.toggle("intro", wanted);
+      if (!wanted) {
+        ["--nx", "--ny", "--ns", "--p"].forEach(function (v) { root.style.removeProperty(v); });
+        root.removeAttribute("data-intro");
+        var nameEl = $(".top:not(.panel__bar) .top__name"), g = nameEl && $(".glyph", nameEl);
+        if (g) { g.style.width = ""; g.style.transform = ""; }
+      }
+    }
+    if (!intro.on) return;
+    layoutVars();
+    intro.nat = measureName();
+    paintIntro();
+  }
+  // opening a project or About from a link should land you past the opening screen,
+  // so closing it returns you to the list rather than the name
+  function skipIntro() {
+    if (!intro.on) return;
+    if (window.scrollY < introHeight() - 1) {
+      window.scrollTo(0, introHeight());
+      paintIntro();
+    }
+  }
+
+  /* ---------- Events ---------- */
+  function openLightbox(i, trigger) {
+    if (!lightboxGallery.length) return;
+    lightboxIndex = (i + lightboxGallery.length) % lightboxGallery.length;
+    lightboxReturnFocus = trigger || document.activeElement;
+    $("#lightboxImg").src = lightboxGallery[lightboxIndex];
+    $("#lightboxCount").textContent = (lightboxIndex + 1) + " / " + lightboxGallery.length;
+    var box = $("#lightbox");
+    box.classList.add("is-open");
+    box.setAttribute("aria-hidden", "false");
+    document.body.classList.add("is-locked");
+    $("#lightboxClose").focus({ preventScroll: true });
+  }
+  function closeLightbox() {
+    var box = $("#lightbox");
+    if (!box.classList.contains("is-open")) return;
+    box.classList.remove("is-open");
+    box.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("is-locked");
+    if (lightboxReturnFocus && document.body.contains(lightboxReturnFocus)) lightboxReturnFocus.focus({ preventScroll: true });
+  }
+  function lightboxStep(delta) { openLightbox(lightboxIndex + delta, lightboxReturnFocus); }
+
+  function bind() {
+    var list = $("#list");
+    var offTimer = null;
+    function hoverOn(i) { clearTimeout(offTimer); activate(i); }
+    // brief delay so sliding from one title to the next doesn't flash the olive background
+    function hoverOff() { clearTimeout(offTimer); offTimer = setTimeout(function () { activate(-1); }, 90); }
+    list.addEventListener("pointerover", function (e) {
+      if (e.pointerType !== "mouse" && e.pointerType !== "pen") return;
+      var title = e.target.closest(".row__title");
+      if (title) hoverOn(+title.closest(".row").dataset.i); else hoverOff();
+    });
+    list.addEventListener("pointerleave", function (e) {
+      if (e.pointerType === "mouse" || e.pointerType === "pen") hoverOff();
+    });
+    list.addEventListener("focusin", function (e) {
+      var row = e.target.closest(".row");
+      if (row) hoverOn(+row.dataset.i);
+    });
+    list.addEventListener("focusout", function (e) {
+      if (!list.contains(e.relatedTarget)) hoverOff();
+    });
+    document.addEventListener("click", function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      e.preventDefault();
+      go(a.getAttribute("href"));
+    });
+    $$(".tab").forEach(function (t) {
+      t.addEventListener("click", function () { go(t.dataset.tab); });
+    });
+    $("#panelBody").addEventListener("click", function (e) {
+      var f = e.target.closest(".fig");
+      if (f && !f.classList.contains("is-missing")) openLightbox(+f.dataset.idx, f);
+    });
+    $("#lightboxClose").addEventListener("click", closeLightbox);
+    $("#lightboxPrev").addEventListener("click", function () { lightboxStep(-1); });
+    $("#lightboxNext").addEventListener("click", function () { lightboxStep(1); });
+    $("#lightbox").addEventListener("click", function (e) {
+      if (e.target.id === "lightbox") closeLightbox();   // click the backdrop itself to dismiss
+    });
+    (function () {   // swipe left/right to move between images on touch
+      var sx = 0, sy = 0, tracking = false;
+      var box = $("#lightbox");
+      box.addEventListener("touchstart", function (e) {
+        if (e.touches.length !== 1) return;
+        sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+      }, { passive: true });
+      box.addEventListener("touchend", function (e) {
+        if (!tracking) return;
+        tracking = false;
+        var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) lightboxStep(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    })();
+    document.addEventListener("keydown", function (e) {
+      if ($("#lightbox").classList.contains("is-open")) {
+        if (e.key === "Escape") closeLightbox();
+        else if (e.key === "ArrowLeft") lightboxStep(-1);
+        else if (e.key === "ArrowRight") lightboxStep(1);
+        return;
+      }
+      if (e.key === "Escape" && $("#panel").classList.contains("is-open")) go(current);
+    });
+    noHover.addEventListener && noHover.addEventListener("change", setupTouch);
+    window.addEventListener("hashchange", function () { route(); });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", function () {
+      setupIntro(); onScroll();
+      var bar = $(".panel__bar");
+      if (bar) document.documentElement.style.setProperty("--barH", bar.offsetHeight + "px");
+    });
+    window.addEventListener("orientationchange", setupIntro);
+  }
+
+  Promise.all([
+    getJSON("content/settings.json", FALLBACK_SETTINGS),
+    getJSON("content/projects.json", { projects: FALLBACK_PROJECTS })
+  ]).then(function (res) {
+    settings = res[0] || {};
+    projects = ((res[1] && res[1].projects) || []).filter(function (p) { return p && p.title; });
+    projects.forEach(function (p) {
+      p.category = CATS.indexOf(p.category) >= 0 ? p.category : "direction";
+      p._slug = slugify(p.title);
+    });
+    CATS.forEach(function (c) {
+      if (!projects.some(function (p) { return p.category === c; })) {
+        $('[data-tab="' + c + '"]').hidden = true; $(".tabs__sep").hidden = true;
+      }
+    });
+    applySettings();
+    buildReveal();
+    bind();
+    setupIntro();
+    route();
+    // web fonts and the artwork land after first paint and change the name's size
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setupIntro);
+    window.addEventListener("load", setupIntro);
+  });
+})();
+</script>
+</body>
+</html>

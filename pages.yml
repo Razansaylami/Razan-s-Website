@@ -1,0 +1,161 @@
+# Pages CMS configuration: sign in at https://app.pagescms.org with GitHub and open this repo.
+media:
+  input: images
+  output: /images
+
+content:
+  - name: projects
+    label: Projects
+    type: file
+    path: content/projects.json
+    fields:
+      - name: projects
+        label: Projects
+        type: object
+        list: true
+        description: Drag to reorder. The order here is the order on the site.
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: category
+            label: List
+            type: select
+            options:
+              values:
+                - value: direction
+                  label: Direction
+                - value: production-design
+                  label: Production Design
+          - name: year
+            label: Year
+            type: string
+          - name: format
+            label: Format
+            type: string
+            description: For example Short film, Music video, Commercial.
+          - name: role
+            label: Razan's role
+            type: string
+            description: Shown on the project page only if Credits is empty.
+          - name: credits
+            label: Credits
+            type: object
+            list: true
+            description: Shown on the project page, in this order.
+            fields:
+              - name: role
+                label: Role
+                type: string
+              - name: name
+                label: Name
+                type: string
+          - name: cover
+            label: Hover image
+            type: image
+            description: Fills the whole screen edge to edge on hover. Use a still around 2000 to 2400px across, saved as JPG under 600 KB.
+          - name: focus
+            label: Keep in view on phones
+            type: select
+            description: Phones held upright crop the sides of the still. Pick the side the subject is on.
+            options:
+              values:
+                - value: center
+                  label: Center
+                - value: left
+                  label: Left
+                - value: right
+                  label: Right
+          - name: description
+            label: Description
+            type: text
+            description: Leave a blank line between paragraphs.
+          - name: video
+            label: Video link
+            type: string
+            description: Optional. Paste a Vimeo or YouTube link.
+          - name: gallery
+            label: Stills
+            type: image
+            list: true
+          - name: coverInGallery
+            label: Show cover among the stills
+            type: boolean
+            default: true
+            description: Turn off if the cover is only for the hover preview and shouldn't also appear as a still on the project page — e.g. when the page is just a video embed.
+          - name: laurels
+            label: Festival laurels
+            type: image
+            list: true
+            description: Shown as a row right below the credits, above the stills. Leave empty to hide.
+
+  - name: settings
+    label: Settings
+    type: file
+    path: content/settings.json
+    fields:
+      - name: name
+        label: Name
+        type: string
+      - name: description
+        label: Search result description
+        type: text
+      - name: portrait
+        label: Portrait
+        type: image
+        description: Shown beside the bio on the About page. Leave empty for a text-only page.
+      - name: email
+        label: Email
+        type: string
+      - name: instagram
+        label: Instagram link
+        type: string
+      - name: representation
+        label: Representation
+        type: string
+        description: Optional. For example the agency name, shown under the email on the About page.
+      - name: about
+        label: About text
+        type: text
+        description: Leave a blank line between paragraphs.
+      - name: lead
+        label: Opening line
+        type: text
+        description: Optional. One or two sentences, set larger than the rest of the bio.
+      - name: links
+        label: Social links
+        type: object
+        list: true
+        description: Shown under the email on the About page, in this order.
+        fields:
+          - name: label
+            label: Label
+            type: string
+            description: For example Instagram, LinkedIn, IMDb.
+          - name: url
+            label: Link
+            type: string
+            description: Full web address. Leave empty and the label shows as plain text.
+      - name: background
+        label: Background color
+        type: string
+        description: Hex code. The green is #5B6A46.
+      - name: textColor
+        label: Text color
+        type: string
+        description: Hex code. The beige is #FCF9F4.
+      - name: mutedColor
+        label: Supporting text color
+        type: string
+        description: Hex code, used for labels, credit roles and section headings. The light green is #B2B6A4.
+      - name: arabicColor
+        label: Arabic lettering color
+        type: string
+        description: Hex code for the Arabic behind the English in the top bar. The light green is #B2B6A4.
+      - name: directionLabel
+        label: First list name
+        type: string
+      - name: productionLabel
+        label: Second list name
+        type: string

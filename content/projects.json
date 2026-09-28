@@ -1,0 +1,771 @@
+{
+  "projects": [
+    {
+      "title": "Displaced",
+      "category": "direction",
+      "year": "2025",
+      "format": "Short film",
+      "role": "Director",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Razan Saylami"
+        },
+        {
+          "role": "Producer",
+          "name": "Sehran Khan, Razan Saylami"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Siddharth Chawla"
+        },
+        {
+          "role": "Production designer",
+          "name": "Skyler Atkinson"
+        }
+      ],
+      "cover": "images/displaced-hero.jpg",
+      "focus": "right",
+      "description": "Displaced follows a woman who escapes the devastation of war in her homeland and seeks safety in a new country. There, she struggles with a profound sense of disconnection and guilt – feeling like an outsider, and as if simply surviving in this new place is a betrayal of her roots. Through a symbolic and emotional journey, she comes to understand that while this new land may never truly feel like home, she can carry her culture with her, creating a life that bridges both worlds.",
+      "video": "",
+      "gallery": [
+        "images/displaced-poster.jpg",
+        "images/displaced-title.jpg",
+        "images/still-05.jpg",
+        "images/still-07.jpg",
+        "images/still-02.jpg",
+        "images/still-08.jpg"
+      ],
+      "laurels": [
+        "images/laurels/displaced/liff-best-international-short.png",
+        "images/laurels/displaced/oceanside-nominee.png",
+        "images/laurels/displaced/antiwar-official-selection.png",
+        "images/laurels/displaced/beirut-womens-official-selection.png",
+        "images/laurels/displaced/riff-official-selection.png"
+      ]
+    },
+    {
+      "title": "Four Walls",
+      "category": "direction",
+      "year": "2022",
+      "format": "Short film",
+      "role": "Director",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Razan Saylami"
+        },
+        {
+          "role": "Producer",
+          "name": "Yashvi Mulchandani"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Nadan Lawande"
+        },
+        {
+          "role": "Production designer",
+          "name": "Shoaib Shawl"
+        }
+      ],
+      "cover": "images/four-walls-hero.jpg",
+      "focus": "right",
+      "description": "Andrew Goblaski, an artist has been given an opportunity of a lifetime but has lost his touch, as he struggles to find himself he meets someone that guides him in the right direction.",
+      "video": "",
+      "gallery": [
+        "images/four-walls-a.jpg",
+        "images/four-walls-b.jpg",
+        "images/four-walls-c.jpg",
+        "images/four-walls-d.jpg",
+        "images/four-walls-e.jpg",
+        "images/four-walls-f.jpg",
+        "images/four-walls-g.jpg",
+        "images/four-walls-h.jpg",
+        "images/four-walls-i.jpg"
+      ]
+    },
+    {
+      "title": "Worth",
+      "category": "direction",
+      "year": "2024",
+      "format": "Music video",
+      "role": "Director",
+      "credits": [
+        {
+          "role": "Artist",
+          "name": "Kejae"
+        },
+        {
+          "role": "Director",
+          "name": "Razan Saylami"
+        },
+        {
+          "role": "Producer",
+          "name": "Razan Saylami"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Tanay Shah"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/worth-hero.jpg",
+      "focus": "center",
+      "description": "",
+      "video": "",
+      "gallery": [
+        "images/worth-a.jpg",
+        "images/worth-b.jpg",
+        "images/worth-c.jpg"
+      ]
+    },
+    {
+      "title": "Talk Too Much",
+      "category": "direction",
+      "year": "2024",
+      "format": "Music video",
+      "role": "Director",
+      "credits": [
+        {
+          "role": "Artist",
+          "name": "Kejae"
+        },
+        {
+          "role": "Director",
+          "name": "Razan Saylami"
+        },
+        {
+          "role": "Producer",
+          "name": "Razan Saylami"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Tanay Shah"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/talk-too-much-hero.jpg",
+      "focus": "center",
+      "description": "",
+      "video": "",
+      "gallery": [
+        "images/talk-too-much-a.jpg",
+        "images/talk-too-much-b.jpg",
+        "images/talk-too-much-c.jpg",
+        "images/talk-too-much-d.jpg",
+        "images/talk-too-much-e.jpg",
+        "images/talk-too-much-f.jpg",
+        "images/talk-too-much-g.jpg",
+        "images/talk-too-much-h.jpg"
+      ]
+    },
+    {
+      "title": "Girl of Now",
+      "category": "direction",
+      "year": "2026",
+      "format": "Spec commercial",
+      "role": "Director",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Razan Saylami"
+        },
+        {
+          "role": "Producer",
+          "name": "Razan Saylami"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Siddharth Chawla"
+        },
+        {
+          "role": "Production designer",
+          "name": "Skyler Atkinson"
+        }
+      ],
+      "cover": "images/girl-of-now-hero.jpg",
+      "focus": "center",
+      "description": "Spec Commercial for Girl of Now, a fragrance by Elie Saab.",
+      "video": "",
+      "gallery": [
+        "images/girl-of-now-a.jpg",
+        "images/girl-of-now-b.jpg",
+        "images/girl-of-now-c.jpg",
+        "images/girl-of-now-d.jpg",
+        "images/girl-of-now-e.jpg",
+        "images/girl-of-now-f.jpg",
+        "images/girl-of-now-g.jpg"
+      ]
+    },
+    {
+      "title": "Alchemy in Venice",
+      "category": "production-design",
+      "year": "2026",
+      "format": "Feature film",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Jon Fitzgerald"
+        },
+        {
+          "role": "Producer",
+          "name": "Jon Fitzgerald, Carey Campbell"
+        },
+        {
+          "role": "Director of photography",
+          "name": "James B Hammond, Vince Nett"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/alchemy-in-venice-hero.jpg",
+      "focus": "center",
+      "description": "Set in Venice Beach, Alchemy in Venice follows three artists whose paths unexpectedly intersect. As their journeys unfold, art becomes a catalyst for creativity, sustainability, and transformation.",
+      "video": "https://www.youtube.com/watch?v=x1L7res2OYQ",
+      "gallery": [],
+      "laurels": [
+        "images/laurels/alchemy-in-venice/awareness-festival-official-selection.png",
+        "images/laurels/alchemy-in-venice/official-selection-white.png"
+      ],
+      "coverInGallery": false
+    },
+    {
+      "title": "312 Days",
+      "category": "production-design",
+      "year": "2026",
+      "format": "Feature film",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Annie Liones Nguyen"
+        },
+        {
+          "role": "Producer",
+          "name": "Sam Johnson"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Davide Picci"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/312-days-hero.jpg",
+      "focus": "center",
+      "description": "A couple on the verge of divorce are forced to live together during the COVID-19 lockdown spanning 312 days in Los Angeles, California.",
+      "video": "",
+      "gallery": [
+        "images/312-days-a.jpg",
+        "images/312-days-b.jpg",
+        "images/312-days-c.jpg",
+        "images/312-days-d.jpg",
+        "images/312-days-e.jpg",
+        "images/312-days-f.jpg",
+        "images/312-days-g.jpg",
+        "images/312-days-h.jpg",
+        "images/312-days-i.jpg",
+        "images/312-days-j.jpg",
+        "images/312-days-k.jpg"
+      ]
+    },
+    {
+      "title": "Blue Top",
+      "category": "production-design",
+      "year": "2024",
+      "format": "Short film",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Anna O’Donnell"
+        },
+        {
+          "role": "Producer",
+          "name": "Shreya Jha"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Siddharth Chawla"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/blue-top-hero.jpg",
+      "focus": "center",
+      "description": "While getting ready for a party, high schooler Allie insists her friends help her find a specific blue top. What comes next is a deeper understanding among the girls who are on the brink of womanhood.",
+      "video": "",
+      "gallery": [
+        "images/blue-top-a.jpg",
+        "images/blue-top-b.jpg",
+        "images/blue-top-c.jpg",
+        "images/blue-top-d.jpg",
+        "images/blue-top-e.jpg",
+        "images/blue-top-f.jpg"
+      ],
+      "laurels": [
+        "images/laurels/blue-top/la-shorts-official-selection.png"
+      ]
+    },
+    {
+      "title": "The Void",
+      "category": "production-design",
+      "year": "2023",
+      "format": "Short film",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Sashwat Mohta"
+        },
+        {
+          "role": "Producer",
+          "name": "Sehran Khan"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Siddharth Chawla"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/the-void-hero.jpg",
+      "focus": "left",
+      "description": "A once brilliant teenager battling drug addiction seeks family support to heal his emotional wounds, but his conservative father’s harsh discipline and mistrust risk tearing their family apart.",
+      "video": "",
+      "gallery": [
+        "images/the-void-a.jpg",
+        "images/the-void-b.jpg",
+        "images/the-void-c.jpg",
+        "images/the-void-d.jpg",
+        "images/the-void-e.jpg",
+        "images/the-void-f.jpg",
+        "images/the-void-g.jpg",
+        "images/the-void-h.jpg",
+        "images/the-void-i.jpg"
+      ],
+      "laurels": [
+        "images/laurels/the-void/beverly-hills-official-selection.png",
+        "images/laurels/the-void/borrego-springs-official-selection.png",
+        "images/laurels/the-void/crystal-palace-official-selection.png",
+        "images/laurels/the-void/dunedin-official-selection.png",
+        "images/laurels/the-void/jaipur-official-selection.png",
+        "images/laurels/the-void/short-sweet-official-selection.png",
+        "images/laurels/the-void/poppy-jasper-official-selection.png"
+      ]
+    },
+    {
+      "title": "Many Thousands Lost",
+      "category": "production-design",
+      "year": "2024",
+      "format": "Short film",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Jehan Patterson"
+        },
+        {
+          "role": "Producer",
+          "name": "Amirah Adem, Marlana Dunn, Chirsten Vanderbilt Ellis"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Caileigh Gold"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/many-thousands-lost-hero.jpg",
+      "focus": "left",
+      "description": "After believing him to be at work, an inquisitive young girl must come to terms with losing her father once she learns he has been sentenced to death.",
+      "video": "",
+      "gallery": [
+        "images/many-thousands-lost-a.jpg",
+        "images/many-thousands-lost-b.jpg",
+        "images/many-thousands-lost-c.jpg",
+        "images/many-thousands-lost-d.jpg",
+        "images/many-thousands-lost-e.jpg",
+        "images/many-thousands-lost-f.jpg",
+        "images/many-thousands-lost-g.jpg",
+        "images/many-thousands-lost-h.jpg",
+        "images/many-thousands-lost-i.jpg",
+        "images/many-thousands-lost-j.jpg"
+      ],
+      "laurels": [
+        "images/laurels/many-thousands-lost/bsa-stamps-action.png",
+        "images/laurels/many-thousands-lost/detroit-black-film-festival.png",
+        "images/laurels/many-thousands-lost/maryland-film-fest.png",
+        "images/laurels/many-thousands-lost/sf-black-film-festival.png",
+        "images/laurels/many-thousands-lost/american-black-film-festival.png",
+        "images/laurels/many-thousands-lost/san-quentin-film-festival.png",
+        "images/laurels/many-thousands-lost/vbiff-laurel.png"
+      ]
+    },
+    {
+      "title": "Inside These Walls",
+      "category": "production-design",
+      "year": "2025",
+      "format": "Short film",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Melissa Fisher"
+        },
+        {
+          "role": "Producer",
+          "name": "Heather Brawley, Katie Gunderson"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Boa Simon"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/inside-these-walls-hero.jpg",
+      "focus": "right",
+      "description": "An estranged couple and their young daughter come together for twenty-four hours and attempt to navigate an uncertain future.",
+      "video": "",
+      "gallery": [
+        "images/inside-these-walls-a.jpg",
+        "images/inside-these-walls-b.jpg",
+        "images/inside-these-walls-c.jpg",
+        "images/inside-these-walls-d.jpg",
+        "images/inside-these-walls-e.jpg",
+        "images/inside-these-walls-f.jpg",
+        "images/inside-these-walls-g.jpg",
+        "images/inside-these-walls-h.jpg",
+        "images/inside-these-walls-i.jpg",
+        "images/inside-these-walls-j.jpg",
+        "images/inside-these-walls-k.jpg",
+        "images/inside-these-walls-l.jpg"
+      ],
+      "laurels": [
+        "images/laurels/inside-these-walls/dwfla-select.png",
+        "images/laurels/inside-these-walls/laurel-74.png",
+        "images/laurels/inside-these-walls/sfiff-official-selection.png",
+        "images/laurels/inside-these-walls/salute-programmers-choice-winner.png",
+        "images/laurels/inside-these-walls/deadcenter-official-selection.png"
+      ]
+    },
+    {
+      "title": "The Yellow Subconscious of Sir Ben",
+      "category": "production-design",
+      "year": "2022",
+      "format": "Short film",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Caio Toretta"
+        },
+        {
+          "role": "Producer",
+          "name": "Sehran Khan"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Siddharth Chawla"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/the-yellow-subconscious-of-sir-ben-hero.jpg",
+      "focus": "center",
+      "description": "A masked individual conflicts with their perceptions of life and reflects their ambitions within a world dominated with a status quo.",
+      "video": "",
+      "gallery": [
+        "images/the-yellow-subconscious-of-sir-ben-a.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-b.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-c.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-d.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-e.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-f.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-g.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-h.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-i.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-j.jpg",
+        "images/the-yellow-subconscious-of-sir-ben-k.jpg"
+      ],
+      "laurels": [
+        "images/laurels/the-yellow-subconscious-of-sir-ben/angaelica-official-selection.png",
+        "images/laurels/the-yellow-subconscious-of-sir-ben/giffoni-shock-official-selection.png"
+      ]
+    },
+    {
+      "title": "Legacy",
+      "category": "production-design",
+      "year": "2025",
+      "format": "Short film",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Yu Hsuan Ting"
+        },
+        {
+          "role": "Producer",
+          "name": "Shreya Jha, Grace Galarraga, Tanya Agarwal"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Bella Zhu"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/legacy-hero.jpg",
+      "focus": "right",
+      "description": "When a debt-ridden technician takes a high-stakes job at an illegal memory-wiping facility, she uncovers the preserved memories of a dying researcher whose final wish is to save a rare medicinal plant – Silver lilies. The technician must choose to erase the legacy for profit or risk her future to preserve it.",
+      "video": "",
+      "gallery": [
+        "images/legacy-a.jpg",
+        "images/legacy-b.jpg",
+        "images/legacy-c.jpg",
+        "images/legacy-d.jpg",
+        "images/legacy-e.jpg",
+        "images/legacy-f.jpg",
+        "images/legacy-g.jpg",
+        "images/legacy-h.jpg",
+        "images/legacy-i.jpg",
+        "images/legacy-j.jpg",
+        "images/legacy-k.jpg",
+        "images/legacy-l.jpg",
+        "images/legacy-m.jpg"
+      ],
+      "laurels": [
+        "images/laurels/legacy/la-independent-women-award-winner.png",
+        "images/laurels/legacy/la-shorts-official-selection.png"
+      ]
+    },
+    {
+      "title": "Together",
+      "category": "production-design",
+      "year": "2025",
+      "format": "Music video",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Artist",
+          "name": "Shubh"
+        },
+        {
+          "role": "Director",
+          "name": "Rubbal GTR"
+        },
+        {
+          "role": "Producer",
+          "name": "Sehran Khan, Siddharth Chawla"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Josh Hill"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/together-hero.jpg",
+      "focus": "right",
+      "description": "",
+      "video": "",
+      "gallery": [
+        "images/together-a.jpg",
+        "images/together-b.jpg",
+        "images/together-c.jpg",
+        "images/together-d.jpg",
+        "images/together-e.jpg",
+        "images/together-f.jpg",
+        "images/together-g.jpg",
+        "images/together-h.jpg",
+        "images/together-i.jpg",
+        "images/together-j.jpg",
+        "images/together-k.jpg",
+        "images/together-l.jpg"
+      ]
+    },
+    {
+      "title": "Dealer",
+      "category": "production-design",
+      "year": "2026",
+      "format": "Music video",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Artist",
+          "name": "Diljit Dosanjh"
+        },
+        {
+          "role": "Director",
+          "name": "Rubbal GTR"
+        },
+        {
+          "role": "Producer",
+          "name": "Sehran Khan, Siddharth Chawla"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Andrew Johnston"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/dealer-hero.jpg",
+      "focus": "center",
+      "description": "",
+      "video": "",
+      "gallery": [
+        "images/dealer-a.jpg",
+        "images/dealer-b.jpg",
+        "images/dealer-c.jpg",
+        "images/dealer-d.jpg",
+        "images/dealer-e.jpg"
+      ]
+    },
+    {
+      "title": "Morni",
+      "category": "production-design",
+      "year": "2026",
+      "format": "Music video",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Artist",
+          "name": "Diljit Dosanjh"
+        },
+        {
+          "role": "Director",
+          "name": "Rubbal GTR"
+        },
+        {
+          "role": "Producer",
+          "name": "Sehran Khan, Siddharth Chawla"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Andrew Johnston"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/morni-hero.jpg",
+      "focus": "center",
+      "description": "",
+      "video": "",
+      "gallery": [
+        "images/morni-a.jpg",
+        "images/morni-b.jpg",
+        "images/morni-c.jpg",
+        "images/morni-d.jpg",
+        "images/morni-e.jpg",
+        "images/morni-f.jpg",
+        "images/morni-g.jpg",
+        "images/morni-h.jpg"
+      ]
+    },
+    {
+      "title": "Dhahia Juice",
+      "category": "production-design",
+      "year": "2024",
+      "format": "Commercial",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Creative director",
+          "name": "Husseiinzs"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Mohamed El Gohary"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/dhahia-juice-preview.jpg",
+      "focus": "center",
+      "description": "Commercial for Dhahia Juice’s Arabian Gulf Cup campaign.",
+      "video": "",
+      "gallery": [
+        "images/dhahia-juice-a.jpg",
+        "images/dhahia-juice-b.jpg",
+        "images/dhahia-juice-c.jpg"
+      ]
+    },
+    {
+      "title": "Smallest AI",
+      "category": "production-design",
+      "year": "2025",
+      "format": "Commercial",
+      "role": "Production designer",
+      "credits": [
+        {
+          "role": "Director",
+          "name": "Ronit Soin, Devansh Pawan"
+        },
+        {
+          "role": "Producer",
+          "name": "Sehran Khan"
+        },
+        {
+          "role": "Director of photography",
+          "name": "Sachin Vinay"
+        },
+        {
+          "role": "Production designer",
+          "name": "Razan Saylami"
+        }
+      ],
+      "cover": "images/smallest-ai-hero.jpg",
+      "focus": "center",
+      "description": "",
+      "video": "",
+      "gallery": [
+        "images/smallest-ai-a.jpg",
+        "images/smallest-ai-b.jpg",
+        "images/smallest-ai-c.jpg",
+        "images/smallest-ai-d.jpg",
+        "images/smallest-ai-e.jpg",
+        "images/smallest-ai-f.jpg",
+        "images/smallest-ai-g.jpg",
+        "images/smallest-ai-h.jpg",
+        "images/smallest-ai-i.jpg",
+        "images/smallest-ai-j.jpg",
+        "images/smallest-ai-k.jpg",
+        "images/smallest-ai-l.jpg",
+        "images/smallest-ai-m.jpg"
+      ]
+    }
+  ]
+}
